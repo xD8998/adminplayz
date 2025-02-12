@@ -439,10 +439,35 @@
         grid-template-columns: 1fr 1fr;
       }
     }
+
+    .favicon-link {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      width: 32px;
+      height: 32px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      z-index: 10;
+    }
+
+    .favicon-link:hover {
+      transform: scale(1.1);
+    }
+
+    .favicon-link img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
   </style>
 </head>
 <body>
   <div class="app">
+    <a href="https://adminplayz.com" class="favicon-link" target="_blank">
+      <img src="https://xd8998.github.io/adminplayz/test.ico" alt="AdminPlayz Logo">
+    </a>
+
     <div class="hero">
       <h1>Connect with Admin Playz</h1>
       <p>Find me across all social platforms</p>
