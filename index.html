@@ -29,7 +29,7 @@
       background-position: center;
       z-index: -1;
       will-change: transform;
-      animation: panBackground 1800s linear infinite;
+      animation: panBackground 60s linear infinite;
       opacity: 0;
       transition: opacity 1s ease-in-out;
     }
@@ -441,13 +441,144 @@
       height: 100%;
       object-fit: contain;
     }
+    
+    /* Base responsive adjustments */
+    @media (max-width: 767px) {
+      .app {
+        padding: 1rem;
+      }
+      
+      .hero h1 {
+        font-size: 1.75rem;
+      }
+      
+      .hero p {
+        font-size: 0.9rem;
+      }
+      
+      .social-grid {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+      }
+      
+      .link-card {
+        padding: 1.25rem;
+      }
+      
+      .corner-image {
+        width: 6rem;
+        height: 6rem;
+      }
+      
+      footer {
+        margin-top: 2rem;
+        font-size: 0.75rem;
+      }
+    }
+
+    /* Landscape mode for phones */
+    @media (max-height: 500px) and (orientation: landscape) {
+      .app {
+        padding: 0.5rem 1rem;
+        justify-content: flex-start;
+      }
+      
+      .hero {
+        margin-bottom: 1rem;
+      }
+      
+      .hero h1 {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+      }
+      
+      .social-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.5rem;
+      }
+      
+      .link-card {
+        padding: 0.75rem;
+      }
+      
+      .icon-wrapper {
+        padding: 0.25rem;
+      }
+      
+      .icon {
+        width: 1.5rem;
+        height: 1.5rem;
+      }
+      
+      .link-label {
+        font-size: 1rem;
+      }
+      
+      .link-description {
+        font-size: 0.75rem;
+      }
+      
+      .corner-image {
+        width: 4rem;
+        height: 4rem;
+      }
+      
+      footer {
+        margin-top: 1rem;
+      }
+      
+      .modal {
+        max-height: 80vh;
+        overflow-y: auto;
+      }
+    }
+
+    /* Ensure modal is always accessible */
+    @media (max-width: 500px) {
+      .modal {
+        width: 95%;
+        padding: 1.5rem;
+      }
+      
+      .modal h2 {
+        font-size: 1.25rem;
+        margin-bottom: 1rem;
+      }
+      
+      .modal a {
+        padding: 0.75rem;
+      }
+      
+      .close-btn {
+        padding: 0.5rem 1rem;
+        margin-top: 1rem;
+      }
+    }
+
+    /* Favicon link responsive positioning */
+    @media (max-width: 500px) {
+      .favicon-link {
+        top: 0.5rem;
+        left: 0.5rem;
+        width: 28px;
+        height: 28px;
+      }
+    }
+
+    /* Background animation performance optimization */
+    @media (max-width: 767px) {
+      .background {
+        width: 140vw;
+        height: 140vh;
+      }
+    }
   </style>
 </head>
 <body>
   <!-- Background Animation Element -->
   <div class="background"></div>
   <div class="app">
-    <a href="https://adminplayz.com" class="favicon-link" target="_blank">
+    <a href="https://adminplayz.com" class="favicon-link">
       <img src="test.ico" alt="AdminPlayz Logo">
     </a>
 
