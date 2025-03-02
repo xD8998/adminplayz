@@ -1,14 +1,986 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Redirecting...</title>
-    <script>
-        window.location.href = "https://adminplayz.com";
-    </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AdminPlayz Social Links</title>
+  <link rel="icon" type="image/x-icon" href="https://xd8998.github.io/adminplayz/test.ico">
+  <style>
+    /* Reset & Basic Styles */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    html, body {
+      height: 100%;
+      font-family: system-ui, -apple-system, sans-serif;
+      color: #1f2937;
+    }
+
+    /* Background Animation using a dedicated element for smooth GPU-accelerated transforms */
+    .background {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      width: 120vw;
+      height: 120vh;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      z-index: -1;
+      will-change: transform;
+      animation: panBackground 60s linear infinite;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+    .background.loaded {
+      opacity: 1;
+    }
+    @keyframes panBackground {
+      0% {
+        transform: translate3d(calc(-50% - 10vw), calc(-50% - 10vh), 0);
+      }
+      25% {
+        transform: translate3d(calc(-50% + 10vw), calc(-50% - 10vh), 0);
+      }
+      50% {
+        transform: translate3d(calc(-50% + 10vw), calc(-50% + 10vh), 0);
+      }
+      75% {
+        transform: translate3d(calc(-50% - 10vw), calc(-50% + 10vh), 0);
+      }
+      100% {
+        transform: translate3d(calc(-50% - 10vw), calc(-50% - 10vh), 0);
+      }
+    }
+
+    /* App Container - Updated with more padding */
+    .app {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 2rem;
+      padding-top: 8rem; /* Increased from 5rem to 8rem to push content down more */
+    }
+
+    /* Hero Section - Updated with more margin */
+    .hero {
+      text-align: center;
+      margin-bottom: 3rem;
+      animation: fadeInDown 0.8s ease-out;
+      margin-top: 4rem; /* Increased from 2rem to 4rem for more spacing from top */
+    }
+    .hero h1 {
+      font-size: 2rem;
+      font-weight: bold;
+      margin-bottom: 1rem;
+      background: linear-gradient(120deg, #000, #00000090, #000);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradientFlow 3s linear infinite;
+    }
+    .hero p {
+      font-size: 1rem;
+      color: #4b5563;
+      transform: translateY(0);
+      transition: transform 0.3s ease;
+    }
+    .hero:hover p {
+      transform: translateY(-3px);
+    }
+
+    /* Social Grid & Link Cards */
+    .social-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      max-width: 800px;
+      width: 100%;
+      animation: fadeInUp 0.8s ease-out;
+    }
+    .link-card {
+      padding: 1.5rem;
+      border-radius: 1rem;
+      color: #fff;
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      cursor: pointer;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      text-decoration: none;
+      position: relative;
+      overflow: hidden;
+      background-size: 200% 200% !important;
+      background-position: center !important;
+    }
+    .link-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      transition: 0.5s;
+    }
+    .link-card:hover::before {
+      left: 100%;
+    }
+    .link-card:hover {
+      box-shadow: 0 0 25px rgba(255, 255, 255, 0.2);
+      transform: scale(1.03) translateY(-5px);
+    }
+    .icon-wrapper {
+      background-color: rgba(255, 255, 255, 0.1);
+      padding: 0.5rem;
+      border-radius: 9999px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      margin-top: 0.25rem;
+    }
+    .link-card:hover .icon-wrapper {
+      transform: rotate(360deg) scale(1.1);
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+    .icon {
+      width: 2rem;
+      height: 2rem;
+    }
+    .label-container {
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+    .link-label {
+      font-size: 1.25rem;
+      font-weight: 600;
+      transition: transform 0.3s ease;
+    }
+    .link-description {
+      font-size: 0.875rem;
+      opacity: 0.8;
+      margin-top: 0.25rem;
+      font-weight: normal;
+      transition: opacity 0.3s ease;
+    }
+    .link-card:hover .link-description {
+      opacity: 1;
+    }
+    .link-card:hover .link-label {
+      transform: translateX(5px);
+    }
+
+    /* Footer Styles */
+    footer {
+      margin-top: 3rem;
+      font-size: 0.875rem;
+      color: #6b7280;
+      animation: fadeIn 1s ease-out;
+    }
+
+    /* Modal Styles */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 50;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease-in-out;
+      backdrop-filter: blur(5px);
+    }
+    .modal-backdrop.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+    .modal {
+      background: #fff;
+      border-radius: 1rem;
+      padding: 2rem;
+      max-width: 400px;
+      width: 90%;
+      transform: scale(0.95) translateY(20px);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      position: relative;
+    }
+    .modal::before {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      border-radius: inherit;
+      z-index: -1;
+    }
+    .modal.active {
+      transform: scale(1) translateY(0);
+    }
+    .modal h2 {
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-bottom: 1.5rem;
+      color: #000;
+      position: relative;
+      padding-bottom: 0.5rem;
+    }
+    .modal h2::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 50px;
+      height: 3px;
+      background: linear-gradient(90deg, #000, transparent);
+    }
+    .modal .link-list {
+      display: grid;
+      gap: 0.75rem;
+    }
+    .modal a {
+      text-decoration: none;
+      color: #000;
+      background: linear-gradient(145deg, #f3f3f3, #ffffff);
+      border-radius: 0.75rem;
+      padding: 1rem;
+      transition: all 0.3s ease-in-out;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid #eee;
+    }
+    .modal a:hover {
+      transform: translateX(5px);
+      background: linear-gradient(145deg, #e5e5e5, #f3f3f3);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+    .close-btn {
+      margin-top: 1.5rem;
+      padding: 0.75rem 1.5rem;
+      background: linear-gradient(145deg, #e5e7eb, #f3f4f6);
+      border: none;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 500;
+      width: 100%;
+    }
+    .close-btn:hover {
+      background: linear-gradient(145deg, #d1d5db, #e5e7eb);
+      transform: translateY(-2px);
+    }
+
+    /* Corner Image Styles */
+    .corner-image {
+      position: fixed;
+      bottom: 0;
+      left: 1rem;
+      width: 8rem;
+      height: 8rem;
+      pointer-events: none;
+      user-select: none;
+      opacity: 0;
+      transform: translate(-20px, 20px);
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.1));
+      z-index: 10;
+    }
+    .corner-image.loaded {
+      opacity: 1;
+      transform: translate(0, 0);
+    }
+
+    /* Background Gradients for Social Cards */
+    .bg-twitter { 
+      background: linear-gradient(135deg, #000000ee 0%, #1DA1F2ee 100%);
+      background-size: 200% 200%;
+    }
+    .bg-discord { 
+      background: linear-gradient(135deg, #5865F2ee 0%, #4752c4ee 100%);
+      background-size: 200% 200%;
+    }
+    .bg-youtube { 
+      background: linear-gradient(135deg, #FF0000ee 0%, #cc0000ee 100%);
+      background-size: 200% 200%;
+    }
+    .bg-roblox { 
+      background: linear-gradient(135deg, #000000ee 0%, #7b2ff9ee 100%);
+      background-size: 200% 200%;
+    }
+    .modal.youtube-modal a {
+      background: linear-gradient(145deg, #ff000015, #ff000008);
+      border: 1px solid #ff000030;
+      color: #cc0000;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+    .modal.youtube-modal a::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, #ff0000, #cc0000);
+      z-index: -1;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .modal.youtube-modal a:hover {
+      transform: translateX(5px);
+      background: linear-gradient(145deg, #e5e5e5, #f3f3f3);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+    .modal.youtube-modal a:hover::before {
+      opacity: 1;
+    }
+    .modal.youtube-modal h2::after {
+      background: linear-gradient(90deg, #ff0000, transparent);
+    }
+    .modal.roblox-modal a {
+      background: linear-gradient(145deg, #7b2ff915, #7b2ff908);
+      border: 1px solid #7b2ff930;
+      color: #7b2ff9;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+    .modal.roblox-modal a::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, #7b2ff9, #6620cc);
+      z-index: -1;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .modal.roblox-modal a:hover {
+      transform: translateX(5px);
+      background: linear-gradient(145deg, #e5e5e5, #f3f3f3);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+    .modal.roblox-modal a:hover::before {
+      opacity: 1;
+    }
+    .modal.roblox-modal h2::after {
+      background: linear-gradient(90deg, #7b2ff9, transparent);
+    }
+
+    /* CSS Icons for Social Links */
+    .icon-inner {
+      width: 2rem;
+      height: 2rem;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    /* Icon images for social platforms */
+    .icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      opacity: 0;
+      transform: scale(0.8);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    
+    .icon img.loaded {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    /* Keyframes for Other Animations */
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+    @keyframes gradientFlow {
+      0% {
+        background-position: 0% 50%;
+      }
+      100% {
+        background-position: 200% 50%;
+      }
+    }
+    @media (min-width: 768px) {
+      .hero h1 {
+        font-size: 3rem;
+      }
+      .hero p {
+        font-size: 1.25rem;
+      }
+      .social-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    .favicon-link {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      width: 32px;
+      height: 32px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      z-index: 10;
+    }
+    .favicon-link:hover {
+      transform: scale(1.1);
+    }
+    .favicon-link img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+    
+    /* Base responsive adjustments */
+    @media (max-width: 767px) {
+      .app {
+        padding: 1rem;
+        padding-top: 6rem; /* Adjusted for mobile but maintaining the pushed-down look */
+      }
+      
+      .hero {
+        margin-top: 3rem; /* Adjusted for mobile */
+      }
+      
+      .hero h1 {
+        font-size: 1.75rem;
+      }
+      
+      .hero p {
+        font-size: 0.9rem;
+      }
+      
+      .social-grid {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+      }
+      
+      .link-card {
+        padding: 1.25rem;
+      }
+      
+      .corner-image {
+        width: 6rem;
+        height: 6rem;
+      }
+      
+      footer {
+        margin-top: 2rem;
+        font-size: 0.75rem;
+      }
+    }
+
+    /* Landscape mode for phones */
+    @media (max-height: 500px) and (orientation: landscape) {
+      .app {
+        padding: 0.5rem 1rem;
+        justify-content: flex-start;
+        padding-top: 5rem; /* Adjusted for landscape but maintaining the pushed-down look */
+      }
+      
+      .hero {
+        margin-top: 2rem;
+        margin-bottom: 1.5rem;
+      }
+      
+      .hero h1 {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+      }
+      
+      .social-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.5rem;
+      }
+      
+      .link-card {
+        padding: 0.75rem;
+      }
+      
+      .icon-wrapper {
+        padding: 0.25rem;
+      }
+      
+      .icon {
+        width: 1.5rem;
+        height: 1.5rem;
+      }
+      
+      .link-label {
+        font-size: 1rem;
+      }
+      
+      .link-description {
+        font-size: 0.75rem;
+      }
+      
+      .corner-image {
+        width: 4rem;
+        height: 4rem;
+      }
+      
+      footer {
+        margin-top: 1rem;
+      }
+      
+      .modal {
+        max-height: 80vh;
+        overflow-y: auto;
+      }
+    }
+
+    /* Ensure modal is always accessible */
+    @media (max-width: 500px) {
+      .modal {
+        width: 95%;
+        padding: 1.5rem;
+      }
+      
+      .modal h2 {
+        font-size: 1.25rem;
+        margin-bottom: 1rem;
+      }
+      
+      .modal a {
+        padding: 0.75rem;
+      }
+      
+      .close-btn {
+        padding: 0.5rem 1rem;
+        margin-top: 1rem;
+      }
+    }
+
+    /* Favicon link responsive positioning */
+    @media (max-width: 500px) {
+      .favicon-link {
+        top: 0.5rem;
+        left: 0.5rem;
+        width: 28px;
+        height: 28px;
+      }
+    }
+
+    /* Background animation performance optimization */
+    @media (max-width: 767px) {
+      .background {
+        width: 140vw;
+        height: 140vh;
+      }
+    }
+
+    /* Latest Video Section - Updated */
+    .latest-video-section {
+      margin-top: 3rem;
+      width: 100%;
+      max-width: 800px;
+      animation: fadeIn 1s ease-out;
+      padding-top: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .latest-video-section h2 {
+      text-align: center;
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(120deg, #000000, #333333);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      position: relative;
+      padding-bottom: 0.5rem;
+    }
+
+    .latest-video-section h2::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #000, transparent);
+    }
+
+    .video-title {
+      margin-top: 1rem;
+      text-align: center;
+      font-size: 1.2rem;
+      color: #1f2937;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: block;
+      background: linear-gradient(120deg, #000, #333);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      padding: 0.5rem;
+      border-radius: 0.5rem;
+      text-shadow: 0 2px 15px rgba(0,0,0,0.2);
+    }
+
+    .video-title:hover {
+      transform: translateY(-2px);
+      text-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    }
+
+    /* Video Container - Updated */
+    .video-container {
+      position: relative;
+      width: 100%;
+      padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+      background: rgba(0, 0, 0, 0.1);
+      border-radius: 1rem;
+      overflow: hidden;
+      box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.2),
+                  0 5px 15px -5px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      opacity: 0; /* Start invisible */
+      animation: fadeIn 0.8s ease-out forwards; /* Fade in animation */
+    }
+
+    .video-container:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 15px 40px -5px rgba(0, 0, 0, 0.25),
+                  0 10px 20px -5px rgba(0, 0, 0, 0.15);
+    }
+
+    .video-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+      border-radius: 1rem;
+      opacity: 0; /* Start invisible */
+      transition: opacity 0.6s ease-in-out; /* Smooth fade in */
+    }
+
+    .video-container iframe.loaded {
+      opacity: 1;
+    }
+
+    @media (max-width: 767px) {
+      .latest-video-section {
+        margin-top: 2rem;
+      }
+      
+      .latest-video-section h2 {
+        font-size: 1.5rem;
+      }
+      
+      .video-title {
+        font-size: 1rem;
+      }
+    }
+  </style>
 </head>
 <body>
-    <p>If you are not redirected, <a href="https://adminplayz.com">click here</a>.</p>
+  <!-- Background Animation Element -->
+  <div class="background"></div>
+  <div class="app">
+    <a href="https://adminplayz.com" class="favicon-link">
+      <img src="https://xd8998.github.io/adminplayz/test.ico" alt="AdminPlayz Logo">
+    </a>
+
+    <div class="hero">
+      <h1>Connect with Admin Playz</h1>
+      <p>Find me across all social platforms</p>
+    </div>
+
+    <div class="social-grid" id="socialGrid"></div>
+
+    <div class="latest-video-section">
+      <h2>Latest Video</h2>
+      <div class="video-container" id="latestVideo">
+        <!-- Video iframe will be inserted here -->
+      </div>
+      <div class="video-title" id="videoTitle"></div>
+    </div>
+
+    <img 
+      id="cornerImage"
+      src="https://www.adminplayz.com/Remove%20background%20project.png"
+      alt="Admin Playz Logo"
+      class="corner-image" 
+    />
+
+    <footer>
+      <p>&copy; 2025 Admin Playz. All rights reserved.</p>
+    </footer>
+  </div>
+
+  <div class="modal-backdrop" id="modalBackdrop">
+    <div class="modal" id="modalContent">
+      <h2 id="modalTitle"></h2>
+      <div class="link-list" id="modalLinks"></div>
+      <button class="close-btn" id="closeModal">Close</button>
+    </div>
+  </div>
+
+  <script>
+    // Social links data
+    const SOCIAL_LINKS = [
+      {
+        name: "Roblox",
+        icon: `<img class="icon" src="https://devforum-uploads.s3.dualstack.us-east-2.amazonaws.com/uploads/original/4X/0/e/e/0eeeb19633422b1241f4306419a0f15f39d58de9.png" alt="Roblox logo">`,
+        description: "Click to view links",
+        type: "multiple",
+        links: [
+          {
+            name: "Profile",
+            url: "https://www.roblox.com/users/1433939513/profile",
+            description: "@Administratorgear"
+          },
+          {
+            name: "Fan Club",
+            url: "https://www.roblox.com/communities/10352325/The-Admin-Playz-Fan-Club#!/about",
+            description: "The Admin Playz Fan Club"
+          },
+          {
+            name: "Development Group",
+            url: "https://www.roblox.com/communities/7162718/The-Admin-Studio#!/about",
+            description: "The Admin Studio (Dev group where we make games)"
+          }
+        ]
+      },
+      {
+        name: "YouTube",
+        icon: `<img class="icon" src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube logo">`,
+        description: "Click to view links",
+        type: "multiple",
+        links: [
+          {
+            name: "Main Channel",
+            url: "https://www.youtube.com/@adminplayz",
+            description: "@adminplayz"
+          },
+          {
+            name: "Shorts Channel",
+            url: "https://www.youtube.com/@AdminPlayzShorts",
+            description: "@AdminPlayzShorts"
+          }
+        ]
+      },
+      {
+        name: "Twitter",
+        url: "https://x.com/AdmisPlayz",
+        icon: `<img class="icon" src="https://www.iconpacks.net/icons/2/free-twitter-logo-icon-2429-thumb.png" alt="Twitter logo">`,
+        description: "@AdmisPlayz",
+        type: "single"
+      },
+      {
+        name: "Discord",
+        url: "https://discord.gg/kJrKzj7rgd",
+        icon: `<img class="icon" src="https://cdn-icons-png.flaticon.com/512/5968/5968756.png" alt="Discord logo">`,
+        description: "The Admin Playz Lounge!",
+        type: "single"
+      }
+    ];
+
+    // DOM Elements
+    const socialGrid = document.getElementById('socialGrid');
+    const modalBackdrop = document.getElementById('modalBackdrop');
+    const modalContent = document.getElementById('modalContent');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalLinks = document.getElementById('modalLinks');
+    const closeModalBtn = document.getElementById('closeModal');
+    const cornerImage = document.getElementById('cornerImage');
+    const backgroundElement = document.querySelector('.background');
+
+    // Animate Corner Image on load
+    window.addEventListener('load', () => {
+      cornerImage.classList.add('loaded');
+    });
+
+    // Modal functions
+    function closeModal() {
+      modalBackdrop.classList.remove('active');
+      modalContent.classList.remove('active');
+    }
+
+    closeModalBtn.addEventListener('click', closeModal);
+
+    modalBackdrop.addEventListener('click', (e) => {
+      if (e.target === modalBackdrop) closeModal();
+    });
+
+    // Enhanced modal opening animation
+    function openModal(title, links, platform) {
+      modalTitle.textContent = title;
+      modalLinks.innerHTML = '';
+      
+      modalContent.classList.remove('youtube-modal', 'roblox-modal');
+      if (platform) {
+        modalContent.classList.add(`${platform}-modal`);
+      }
+
+      links.forEach((link, index) => {
+        const a = document.createElement('a');
+        a.href = link.url;
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
+        a.textContent = link.name + (link.description ? ` - ${link.description}` : '');
+        a.style.opacity = '0';
+        a.style.transform = 'translateX(-20px)';
+        a.style.transition = 'all 0.3s ease';
+        a.style.transitionDelay = `${index * 0.1}s`;
+        modalLinks.appendChild(a);
+        setTimeout(() => {
+          a.style.opacity = '1';
+          a.style.transform = 'translateX(0)';
+        }, 50);
+      });
+
+      modalBackdrop.classList.add('active');
+      modalContent.classList.add('active');
+    }
+
+    // Background Load Handling
+    const backgroundImage = new Image();
+    backgroundImage.src = 'https://xd8998.github.io/adminplayz/background.jpg';
+    
+    backgroundImage.onload = () => {
+      backgroundElement.style.backgroundImage = `url('${backgroundImage.src}')`;
+      backgroundElement.classList.add('loaded');
+    };
+    
+    backgroundImage.onerror = () => {
+      console.error('Background image failed to load');
+    };
+
+    // Create social link cards
+    SOCIAL_LINKS.forEach((item) => {
+      const linkCard = document.createElement('div');
+      linkCard.className = 'link-card';
+      linkCard.classList.add(`bg-${item.name.toLowerCase()}`);
+
+      const iconWrapper = document.createElement('div');
+      iconWrapper.className = 'icon-wrapper';
+      iconWrapper.innerHTML = item.icon;
+      
+      // Get the icon image and add load animation
+      const iconImg = iconWrapper.querySelector('img');
+      if (iconImg) {
+        iconImg.onload = function() {
+          this.classList.add('loaded');
+        };
+      }
+      
+      linkCard.appendChild(iconWrapper);
+
+      const labelContainer = document.createElement('div');
+      labelContainer.className = 'label-container';
+
+      const linkLabel = document.createElement('span');
+      linkLabel.className = 'link-label';
+      linkLabel.textContent = item.name;
+      labelContainer.appendChild(linkLabel);
+
+      if (item.description) {
+        const description = document.createElement('span');
+        description.className = 'link-description';
+        description.textContent = item.description;
+        labelContainer.appendChild(description);
+      }
+      linkCard.appendChild(labelContainer);
+
+      if (item.type === 'single') {
+        linkCard.addEventListener('click', () => {
+          window.open(item.url, '_blank');
+        });
+      } else {
+        linkCard.addEventListener('click', () => {
+          const platform = item.name.toLowerCase();
+          openModal(item.name + ' Links', item.links, platform);
+        });
+      }
+      socialGrid.appendChild(linkCard);
+    });
+
+    // YouTube video section - Replace API integration with GitHub fetch
+    async function fetchLatestVideo() {
+      try {
+        // Adding cache-busting parameter to force fresh fetch on every refresh
+        const response = await fetch('https://raw.githubusercontent.com/xD8998/adminplayz/refs/heads/main/devtest/link?' + new Date().getTime());
+        
+        if (!response.ok) throw new Error('Failed to fetch video data');
+        
+        const data = await response.text();
+        const [videoUrl, videoTitle] = data.split('\n').map(line => line.trim());
+        const videoId = videoUrl.split('v=')[1]?.split('&')[0]; // Extract video ID from URL, handling any additional parameters
+        
+        if (videoId) {
+          // Insert the video iframe
+          document.getElementById('latestVideo').innerHTML = `
+            <iframe
+              src="https://www.youtube.com/embed/${videoId}"
+              title="Latest Video"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+              onload="this.classList.add('loaded')"
+            ></iframe>
+          `;
+
+          // Update video title to be clickable
+          const videoTitleElement = document.getElementById('videoTitle');
+          videoTitleElement.innerHTML = `<a href="${videoUrl}" target="_blank" class="video-title">${videoTitle}</a>`;
+        }
+      } catch (error) {
+        console.error('Error fetching latest video:', error);
+        document.getElementById('latestVideo').innerHTML = `
+          <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center;">
+            Failed to load latest video
+          </div>
+        `;
+      }
+    }
+
+    // Call the function when the page loads
+    fetchLatestVideo();
+  </script>
 </body>
 </html>
