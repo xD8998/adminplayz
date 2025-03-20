@@ -7,7 +7,7 @@
   <script>
     async function getClickCount() {
       try {
-        const response = await fetch("https://adminplayz.onrender.com/");
+        const response = await fetch("https://adminplayz.onrender.com/clicks");
         const data = await response.json();
         document.getElementById("click-count").innerText = data.clicks;
       } catch (error) {
@@ -17,7 +17,7 @@
 
     async function handleClick() {
       try {
-        await fetch("https://adminplayz.onrender.com/", { method: "POST" });
+        await fetch("https://adminplayz.onrender.com/clicks", { method: "POST" });
         getClickCount();
       } catch (error) {
         console.error("Error updating click count:", error);
