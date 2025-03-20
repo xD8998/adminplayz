@@ -4,7 +4,9 @@ const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(cors());
+// Enable CORS for all origins (you can replace "*" with specific origins if needed)
+app.use(cors());  // This should be added here
+
 app.use(express.json());
 
 // Load click count from file
