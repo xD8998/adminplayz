@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Live Click Counter</title>
+  <script>
+    async function getClickCount() {
+      const response = await fetch("https://your-render-backend.onrender.com/clicks");
+      const data = await response.json();
+      document.getElementById("click-count").innerText = data.clicks;
+    }
+
+    async function handleClick() {
+      await fetch("https://adminplayz.onrender.com", { method: "POST" });
+      getClickCount();
+    }
+
+    window.onload = getClickCount;
+  </script>
+</head>
+<body>
+  <h1>Live Click Counter</h1>
+  <p>Click the button to increase the count!</p>
+  <button onclick="handleClick()">Click Me!</button>
+  <p>Clicks: <span id="click-count">0</span></p>
+</body>
+</html>
