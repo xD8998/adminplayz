@@ -6,7 +6,7 @@
   <title>Live Click Counter</title>
   <script>
     async function getClickCount() {
-      const response = await fetch("https://your-render-backend.onrender.com/clicks");
+      const response = await fetch("https://adminplayz.onrender.com");
       const data = await response.json();
       document.getElementById("click-count").innerText = data.clicks;
     }
