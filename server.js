@@ -3,25 +3,35 @@ const fs = require('fs');
 const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT || 3000;
+const filePath = 'clicks.json';
 
-// Enable CORS for all origins (you can replace "*" with specific origins if needed)
-app.use(cors());  // This should be added here
-
+app.use(cors());
 app.use(express.json());
+
+// Ensure the clicks file exists
+if (!fs.existsSync(filePath)) {
+  fs.writeFileSync(filePath, JSON.stringify({ clicks: 0 }));
+}
 
 // Load click count from file
 const loadClicks = () => {
   try {
-    const data = fs.readFileSync('clicks.json', 'utf8');
-    return JSON.parse(data).clicks;
+    const data = fs.readFileSync(filePath, 'utf8');
+    const json = JSON.parse(data);
+    return json.clicks || 0;
   } catch (error) {
+    console.error('Error reading clicks.json:', error);
     return 0;
   }
 };
 
 // Save click count to file
 const saveClicks = (clicks) => {
-  fs.writeFileSync('clicks.json', JSON.stringify({ clicks }));
+  try {
+    fs.writeFileSync(filePath, JSON.stringify({ clicks }));
+  } catch (error) {
+    console.error('Error writing to clicks.json:', error);
+  }
 };
 
 // Get the current click count
