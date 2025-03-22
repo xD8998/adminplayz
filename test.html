@@ -6,11 +6,12 @@
   <title>Live Click Counter</title>
   <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
   <script>
-    const socket = io("https://adminplayz.onrender.com");
+    const backendUrl = "adminplayz-production.up.railway.app"; // Update this URL
+    const socket = io(backendUrl);
 
     async function handleClick() {
       try {
-        await fetch("https://adminplayz.onrender.com/clicks", { method: "POST" });
+        await fetch(`${backendUrl}/clicks`, { method: "POST" });
       } catch (error) {
         console.error("Error updating click count:", error);
       }
