@@ -26,8 +26,8 @@ app.use(morgan('combined'));
 
 // Rate limiting to prevent DDoS attacks (1000 requests per minute)
 const limiter = rateLimit({
-  windowMs: 60 * 1000, // 1 minute
-  max: 1000, // Max 1000 requests per minute per IP
+  windowMs: 60 * 1000,
+  max: 1000,
   message: 'Too many requests from this IP, please try again later.'
 });
 app.use('/clicks', limiter);
@@ -71,8 +71,24 @@ app.get('/clicks', (req, res) => {
   res.json({ clicks });
 });
 
-app.post('/clicks', (req, res) => {
+app.post('/clicks/increment', (req, res) => {
   clicks += 1;
+  saveClicks();
+  io.emit('updateClicks', clicks);
+  res.json({ clicks });
+});
+
+app.post('/clicks/decrement', (req, res) => {
+  if (clicks > 0) {
+    clicks -= 1;
+    saveClicks();
+    io.emit('updateClicks', clicks);
+  }
+  res.json({ clicks });
+});
+
+app.post('/clicks/reset', (req, res) => {
+  clicks = 0;
   saveClicks();
   io.emit('updateClicks', clicks);
   res.json({ clicks });
