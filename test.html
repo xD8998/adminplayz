@@ -9,9 +9,11 @@
     const backendUrl = "https://adminplayz-production.up.railway.app"; // Update this URL
     const socket = io(backendUrl);
 
-    async function handleClick() {
+    async function updateClicks(endpoint) {
       try {
-        await fetch(`${backendUrl}/clicks`, { method: "POST" });
+        const response = await fetch(`${backendUrl}/clicks/${endpoint}`, { method: "POST" });
+        const data = await response.json();
+        console.log(data);
       } catch (error) {
         console.error("Error updating click count:", error);
       }
@@ -24,8 +26,10 @@
 </head>
 <body>
   <h1>Live Click Counter</h1>
-  <p>Click the button to increase the count!</p>
-  <button onclick="handleClick()">Click Me!</button>
+  <p>Click a button to adjust the count!</p>
+  <button onclick="updateClicks('increment')">Increment</button>
+  <button onclick="updateClicks('decrement')">Decrement</button>
+  <button onclick="updateClicks('reset')">Reset</button>
   <p>Clicks: <span id="click-count">0</span></p>
 </body>
 </html>
