@@ -1,15 +1,649 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Redirecting...</title>
-    <meta http-equiv="refresh" content="0;url=https://adminplayz.com">
-    <script>
-        window.location.href = "https://adminplayz.com";
-    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Welcome to the Admin Playz Website</title>
+    <link rel="icon" type="image/x-icon" href="./test.ico">
+    <meta name="description" content="Connect with Admin Playz across all social platforms.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLMDJ/cn1k02hCu5+o/5g4+Xv6u8tB4z8/tM03/sQJb7w/qLwJm9w/gD/cI0oNlQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        /* Modern Reset & Dark Theme Base */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        html, body {
+            height: 100%;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background-color: #0d1117; /* Dark background */
+            color: #c9d1d9; /* Light text for contrast */
+            scroll-behavior: smooth;
+        }
+
+        /* Background Animated Particles/Noise */
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            overflow: hidden;
+            background: radial-gradient(circle at 50% 50%, rgba(20, 25, 30, 0.8) 0%, rgba(13, 17, 23, 1) 100%);
+        }
+        .background::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 500 500' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.08'/%3E%3C/svg%3E");
+            animation: panBackground 120s linear infinite;
+            pointer-events: none;
+            opacity: 0.5;
+        }
+        @keyframes panBackground {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(-100px, -100px); }
+        }
+
+        /* Main App Container - Centered, modern spacing */
+        .app {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 2rem 1rem 4rem;
+            z-index: 1;
+        }
+
+        /* Hero Section - Bold, gradient text */
+        .hero {
+            text-align: center;
+            margin-bottom: 4rem;
+            animation: fadeInDown 1s ease-out;
+            margin-top: 4rem;
+        }
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 4rem);
+            font-weight: 900;
+            margin-bottom: 0.75rem;
+            /* Modern vibrant gradient text effect */
+            background: linear-gradient(90deg, #4F46E5, #9333EA, #EC4899);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: textGradient 6s ease infinite alternate;
+        }
+        @keyframes textGradient {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+        .hero p {
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            color: #6b7280;
+            font-weight: 300;
+            letter-spacing: 0.05em;
+        }
+
+        /* Social Grid - Responsive, max-width layout */
+        .social-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            max-width: 1000px;
+            width: 100%;
+            animation: fadeInUp 1s ease-out 0.2s forwards;
+            opacity: 0;
+            margin-bottom: 4rem;
+        }
+
+        /* Link Card - Glassmorphism style, pronounced hover effects */
+        .link-card {
+            display: flex;
+            align-items: center;
+            padding: 1.5rem;
+            border-radius: 1.5rem;
+            background: rgba(255, 255, 255, 0.05); /* Semi-transparent background */
+            backdrop-filter: blur(5px); /* Glass effect */
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            text-decoration: none;
+            color: #e5e7eb;
+            position: relative;
+            overflow: hidden;
+        }
+        .link-card:hover {
+            border-color: #4F46E5;
+            box-shadow: 0 10px 20px rgba(79, 70, 229, 0.2), 0 0 0 4px rgba(79, 70, 229, 0.2);
+            transform: translateY(-5px) scale(1.02);
+            background: rgba(255, 255, 255, 0.1);
+        }
+        /* Hover glow/light effect */
+        .link-card::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300%;
+            height: 300%;
+            background: radial-gradient(circle, rgba(79, 70, 229, 0.3) 0%, transparent 70%);
+            transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+            transform: translate(-50%, -50%) scale(0);
+            opacity: 0;
+            z-index: -1;
+        }
+        .link-card:hover::before {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+        }
+
+        /* Icon Styling */
+        .icon-wrapper {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 0.75rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            transition: transform 0.4s ease;
+        }
+        .link-card:hover .icon-wrapper {
+            transform: rotate(10deg) scale(1.05);
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        .icon-fa {
+            width: 1.5rem;
+            height: 1.5rem;
+            font-size: 1.5rem;
+        }
+        .icon-img {
+            width: 1.5rem;
+            height: 1.5rem;
+            object-fit: contain;
+        }
+        
+        /* Label Container */
+        .label-container {
+            display: flex;
+            flex-direction: column;
+        }
+        .link-label {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+            transition: color 0.3s ease;
+        }
+        .link-description {
+            font-size: 0.9rem;
+            color: #9ca3af;
+            transition: color 0.3s ease;
+        }
+        .link-card:hover .link-label {
+            color: #ffffff;
+        }
+        .link-card:hover .link-description {
+            color: #c9d1d9;
+        }
+
+        /* Modal Overhaul */
+        .modal-backdrop {
+            position: fixed;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0.75);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 50;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease-in-out;
+            backdrop-filter: blur(8px);
+        }
+        .modal-backdrop.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+        .modal {
+            background: #161b22;
+            border-radius: 1.5rem;
+            padding: 2.5rem;
+            max-width: 450px;
+            width: 90%;
+            border: 1px solid #30363d;
+            transform: scale(0.8) translateY(-20px);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Spring animation effect */
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+        .modal.active {
+            transform: scale(1) translateY(0);
+        }
+        .modal h2 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: #ffffff;
+            border-bottom: 2px solid #4F46E5;
+            padding-bottom: 0.5rem;
+        }
+        .modal .link-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .modal a {
+            text-decoration: none;
+            color: #e5e7eb;
+            background: #21262d;
+            border-radius: 1rem;
+            padding: 1rem 1.5rem;
+            transition: all 0.3s ease-in-out;
+            border-left: 5px solid transparent;
+            font-weight: 500;
+        }
+        .modal a:hover {
+            transform: translateX(10px);
+            background: #2a3038;
+            border-left-color: #EC4899;
+        }
+        .close-btn {
+            margin-top: 2rem;
+            padding: 0.8rem;
+            background: linear-gradient(90deg, #4F46E5, #EC4899);
+            color: white;
+            border: none;
+            border-radius: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            width: 100%;
+            box-shadow: 0 4px 15px rgba(79, 70, 229, 0.4);
+        }
+        .close-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(79, 70, 229, 0.6);
+        }
+
+        /* Latest Video Section - Integrated into dark theme */
+        .latest-video-section {
+            margin-top: 4rem;
+            width: 100%;
+            max-width: 1000px;
+            animation: fadeIn 1s ease-out 0.4s forwards;
+            opacity: 0;
+            padding: 2rem;
+            background: #161b22;
+            border-radius: 1.5rem;
+            border: 1px solid #30363d;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .latest-video-section h2 {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 2rem;
+            color: #ffffff;
+            text-shadow: 0 0 10px rgba(236, 72, 153, 0.5);
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .video-container:hover {
+            transform: scale(1.005);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 1rem;
+            opacity: 0; 
+            transition: opacity 0.8s ease-in-out;
+        }
+
+        .video-container iframe.loaded {
+            opacity: 1;
+        }
+
+        .video-title {
+            margin-top: 1.5rem;
+            text-align: center;
+            font-size: 1.25rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: block;
+            color: #9333EA; /* Accent color */
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+        .video-title:hover {
+            color: #EC4899;
+            transform: translateY(-2px);
+        }
+
+        /* Footer & Corner Image */
+        footer {
+            margin-top: 5rem;
+            font-size: 0.9rem;
+            color: #6b7280;
+            animation: fadeIn 1s ease-out 0.6s forwards;
+            opacity: 0;
+        }
+        .corner-image {
+            /* Keep original styles but ensure it looks good on dark background */
+            filter: drop-shadow(0 0 15px rgba(0, 0, 0, 0.5));
+            z-index: 10;
+        }
+        
+        /* Utility Classes for Card Colors (using modern gradients) */
+        .bg-tiktok { background: linear-gradient(135deg, #000000, #EE1D52, #69C9D0); background-size: 200% 200% !important; }
+        .bg-snapchat { background: linear-gradient(135deg, #FFFC00, #F0E800); background-size: 200% 200% !important; }
+        .bg-roblox { background: linear-gradient(135deg, #000000, #7b2ff9); background-size: 200% 200% !important; }
+        .bg-youtube { background: linear-gradient(135deg, #FF0000, #cc0000); background-size: 200% 200% !important; }
+        .bg-twitter { background: linear-gradient(135deg, #1DA1F2, #000000); background-size: 200% 200% !important; }
+        .bg-discord { background: linear-gradient(135deg, #5865F2, #4752c4); background-size: 200% 200% !important; }
+
+        /* Icon Colors to contrast against dark cards */
+        .icon-tiktok { color: white; } /* TikTok logo is often white on the card */
+        .icon-snapchat { color: #0d1117; } /* Snapchat is yellow, so dark icon contrasts better */
+        .icon-roblox { color: white; }
+        .icon-youtube { color: white; }
+        .icon-twitter { color: white; }
+        .icon-discord { color: white; }
+
+        /* Media Queries */
+        @media (max-width: 768px) {
+            .hero { margin-top: 2rem; margin-bottom: 2rem; }
+            .hero h1 { font-size: 2.5rem; }
+            .hero p { font-size: 1rem; }
+            .social-grid { gap: 1rem; }
+            .link-card { padding: 1.25rem; }
+            .latest-video-section { margin-top: 3rem; padding: 1rem; }
+            .latest-video-section h2 { font-size: 1.5rem; }
+            .video-title { font-size: 1rem; }
+            footer { margin-top: 3rem; font-size: 0.8rem; }
+        }
+        
+        /* Re-using existing animations, modified for modern look */
+        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+    </style>
 </head>
 <body>
-    <p>If you are not redirected, <a href="https://adminplayz.com">click here</a>.</p>
+    <div class="background"></div>
+    <div class="app">
+        <a href="https://adminplayz.com" class="favicon-link">
+            <img src="./test.ico" alt="AdminPlayz Logo">
+        </a>
+
+        <div class="hero">
+            <h1>Welcome to the Admin Playz Website</h1>
+            <p>Connect to Admin Playz across all social platforms</p>
+        </div>
+
+        <div class="social-grid" id="socialGrid"></div>
+
+        <div class="latest-video-section">
+            <h2>Latest Video</h2>
+            <div class="video-container" id="latestVideo">
+                </div>
+            <div id="videoTitle"></div>
+        </div>
+
+        <img 
+            id="cornerImage"
+            src="./Remove%20background%20project.png"
+            alt="Admin Playz Logo"
+            class="corner-image" 
+        />
+
+        <footer>
+            <p>&copy; 2025 Admin Playz. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <div class="modal-backdrop" id="modalBackdrop">
+        <div class="modal" id="modalContent">
+            <h2 id="modalTitle"></h2>
+            <div class="link-list" id="modalLinks"></div>
+            <button class="close-btn" id="closeModal">Close</button>
+        </div>
+    </div>
+
+    <script>
+        // Updated Social links data with TikTok and Snapchat
+        const SOCIAL_LINKS = [
+            {
+                name: "TikTok",
+                url: "https://www.tiktok.com/@adminplayzz",
+                // Use Font Awesome icon for modernity
+                icon: `<i class="fab fa-tiktok icon-fa icon-tiktok"></i>`,
+                description: "@adminplayzz",
+                type: "single"
+            },
+            {
+                name: "Snapchat",
+                url: "https://www.snapchat.com/@admisplayz",
+                icon: `<i class="fab fa-snapchat-ghost icon-fa icon-snapchat"></i>`,
+                description: "@admisplayz",
+                type: "single"
+            },
+            {
+                name: "YouTube",
+                icon: `<i class="fab fa-youtube icon-fa icon-youtube"></i>`,
+                description: "Click to view channels",
+                type: "multiple",
+                links: [
+                    {
+                        name: "Main Channel",
+                        url: "https://www.youtube.com/@adminplayz",
+                        description: "@adminplayz"
+                    },
+                    {
+                        name: "Shorts Channel",
+                        url: "https://www.youtube.com/@AdminPlayzShorts",
+                        description: "@AdminPlayzShorts"
+                    }
+                ]
+            },
+            {
+                name: "Discord",
+                url: "https://discord.gg/kJrKzj7rgd",
+                icon: `<i class="fab fa-discord icon-fa icon-discord"></i>`,
+                description: "The Admin Playz Lounge!",
+                type: "single"
+            },
+            {
+                name: "Twitter",
+                url: "https://x.com/AdmisPlayz",
+                icon: `<i class="fab fa-x-twitter icon-fa icon-twitter"></i>`,
+                description: "@AdmisPlayz",
+                type: "single"
+            },
+            {
+                name: "Roblox",
+                // Use Font Awesome for Roblox since it's now widely used
+                icon: `<i class="fas fa-gamepad icon-fa icon-roblox"></i>`, 
+                description: "Click to view links",
+                type: "multiple",
+                links: [
+                    {
+                        name: "Profile",
+                        url: "https://www.roblox.com/users/1433939513/profile",
+                        description: "@Administratorgear"
+                    },
+                    {
+                        name: "Fan Club",
+                        url: "https://www.roblox.com/communities/10352325/The-Admin-Playz-Fan-Club#!/about",
+                        description: "The Admin Playz Fan Club"
+                    },
+                    {
+                        name: "Development Group",
+                        url: "https://www.roblox.com/communities/7162718/The-Admin-Studio#!/about",
+                        description: "The Admin Studio (Dev group where we make games)"
+                    }
+                ]
+            }
+        ];
+
+        // DOM Elements
+        const socialGrid = document.getElementById('socialGrid');
+        const modalBackdrop = document.getElementById('modalBackdrop');
+        const modalContent = document.getElementById('modalContent');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalLinks = document.getElementById('modalLinks');
+        const closeModalBtn = document.getElementById('closeModal');
+        const cornerImage = document.getElementById('cornerImage');
+        const backgroundElement = document.querySelector('.background');
+
+        // Initial Load Animations
+        window.addEventListener('load', () => {
+            cornerImage.classList.add('loaded');
+            // Ensure background image opacity is 1 after a slight delay if you add a specific image
+            // Currently, using CSS noise, so this part is less critical, but kept for future image use
+            // backgroundElement.classList.add('loaded'); 
+        });
+
+        // Modal functions
+        function closeModal() {
+            modalBackdrop.classList.remove('active');
+            modalContent.classList.remove('active');
+            document.body.style.overflow = 'auto'; // Re-enable scrolling
+        }
+
+        closeModalBtn.addEventListener('click', closeModal);
+
+        modalBackdrop.addEventListener('click', (e) => {
+            if (e.target === modalBackdrop) closeModal();
+        });
+
+        // Enhanced modal opening animation (simplified, modern look)
+        function openModal(title, links) {
+            modalTitle.textContent = title;
+            modalLinks.innerHTML = '';
+            
+            // Remove previous platform-specific classes for a cleaner look
+            modalContent.className = 'modal active'; 
+
+            links.forEach((link, index) => {
+                const a = document.createElement('a');
+                a.href = link.url;
+                a.target = '_blank';
+                a.rel = 'noopener noreferrer';
+                a.innerHTML = `<strong>${link.name}</strong>${link.description ? `<br><small>${link.description}</small>` : ''}`;
+                a.style.opacity = '0';
+                a.style.transform = 'translateY(10px)';
+                a.style.transition = 'all 0.3s ease-out';
+                a.style.transitionDelay = `${index * 0.05}s`;
+                modalLinks.appendChild(a);
+                setTimeout(() => {
+                    a.style.opacity = '1';
+                    a.style.transform = 'translateY(0)';
+                }, 50);
+            });
+
+            modalBackdrop.classList.add('active');
+            modalContent.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Disable background scrolling
+        }
+
+        // Create social link cards
+        SOCIAL_LINKS.forEach((item) => {
+            const linkCard = document.createElement('a'); // Use <a> tag directly for better accessibility/SEO
+            linkCard.className = 'link-card';
+            linkCard.classList.add(`bg-${item.name.toLowerCase()}`);
+            linkCard.href = item.type === 'single' ? item.url : '#'; // Use '#' for multiple links
+
+            const iconWrapper = document.createElement('div');
+            iconWrapper.className = 'icon-wrapper';
+            iconWrapper.innerHTML = item.icon;
+            
+            linkCard.appendChild(iconWrapper);
+
+            const labelContainer = document.createElement('div');
+            labelContainer.className = 'label-container';
+
+            const linkLabel = document.createElement('span');
+            linkLabel.className = 'link-label';
+            linkLabel.textContent = item.name;
+            labelContainer.appendChild(linkLabel);
+
+            if (item.description) {
+                const description = document.createElement('span');
+                description.className = 'link-description';
+                description.textContent = item.description;
+                labelContainer.appendChild(description);
+            }
+            linkCard.appendChild(labelContainer);
+            
+            // Add click handler for 'multiple' links to open modal
+            if (item.type === 'multiple') {
+                linkCard.addEventListener('click', (e) => {
+                    e.preventDefault(); // Prevent default link navigation
+                    openModal(item.name + ' Links', item.links);
+                });
+            }
+            socialGrid.appendChild(linkCard);
+        });
+
+        // YouTube video section - Keep the existing logic for fetching from GitHub/local file
+        async function fetchLatestVideo() {
+            try {
+                // Keep the path structure: ./devtest/link (relative path kept)
+                const response = await fetch('./devtest/link?' + new Date().getTime()); 
+                
+                if (!response.ok) throw new Error('Failed to fetch video data');
+                
+                const data = await response.text();
+                const [videoUrl, videoTitle] = data.split('\n').map(line => line.trim());
+                const videoId = videoUrl.split('v=')[1]?.split('&')[0];
+                
+                if (videoId) {
+                    document.getElementById('latestVideo').innerHTML = `
+                        <iframe
+                            src="https://www.youtube.com/embed/${videoId}?autoplay=0&rel=0"
+                            title="Latest Video: ${videoTitle}"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen
+                            onload="this.classList.add('loaded')"
+                        ></iframe>
+                    `;
+                    // Use a proper <a> tag for the title
+                    document.getElementById('videoTitle').innerHTML = `<a href="${videoUrl}" target="_blank" class="video-title">${videoTitle}</a>`;
+                }
+            } catch (error) {
+                console.error('Error fetching latest video:', error);
+                document.getElementById('latestVideo').innerHTML = `
+                    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; color: #6b7280;">
+                        Failed to load latest video.
+                    </div>
+                `;
+                document.getElementById('videoTitle').innerHTML = ''; // Clear title if error
+            }
+        }
+
+        fetchLatestVideo();
+    </script>
 </body>
 </html>
