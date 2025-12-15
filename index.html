@@ -23,15 +23,8 @@
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
     html,body{height:100%;font-family:system-ui,-apple-system,sans-serif;color:#1f2937}
-    .background{position:fixed;top:50%;left:50%;width:120vw;height:120vh;background-size:cover;background-repeat:no-repeat;background-position:center;z-index:-1;will-change:transform;animation:panBackground 60s linear infinite;opacity:0;transition:opacity 1s ease-in-out}
+    .background{position:fixed;top:50%;left:50%;width:120vw;height:120vh;background-size:cover;background-repeat:no-repeat;background-position:center;z-index:-1;will-change:transform;opacity:0;transition:opacity 1s ease-in-out}
     .background.loaded{opacity:1}
-    @keyframes panBackground{
-      0%{transform:translate3d(calc(-50% - 10vw),calc(-50% - 10vh),0)}
-      25%{transform:translate3d(calc(-50% + 10vw),calc(-50% - 10vh),0)}
-      50%{transform:translate3d(calc(-50% + 10vw),calc(-50% + 10vh),0)}
-      75%{transform:translate3d(calc(-50% - 10vw),calc(-50% + 10vh),0)}
-      100%{transform:translate3d(calc(-50% - 10vw),calc(-50% - 10vh),0)}
-    }
     .app{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:2rem;padding-top:8rem}
     .hero{text-align:center;margin:4rem 0 3rem;animation:fadeInDown .8s ease-out}
     .hero h1{font-size:2rem;font-weight:700;margin-bottom:1rem;background:linear-gradient(120deg,#000,#00000090,#000);background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:gradientFlow 3s linear infinite;text-shadow:0 4px 18px rgba(0,0,0,.35)}
@@ -296,6 +289,73 @@
     backgroundImage.onload=()=>{
       backgroundElement.style.backgroundImage=`url('${backgroundImage.src}')`;
       backgroundElement.classList.add("loaded");
+
+      // JS-driven background pan with 50% chance to go diagonal on direction changes
+      const minOffset=-10;
+      const maxOffset=10;
+      const speed=0.004; // movement speed (vw/vh per ms)
+
+      const cardinalDirs=[
+        {vx: 1, vy: 0},  // right
+        {vx:-1, vy: 0},  // left
+        {vx: 0, vy: 1},  // down
+        {vx: 0, vy:-1}   // up
+      ];
+      const diagonalDirs=[
+        {vx: 1, vy: 1},   // down-right
+        {vx:-1, vy: 1},   // down-left
+        {vx: 1, vy:-1},   // up-right
+        {vx:-1, vy:-1}    // up-left
+      ];
+
+      function pickNewDirection(){
+        const useDiagonal=Math.random()<0.5; // 50% chance to go diagonal
+        const pool=useDiagonal?diagonalDirs:cardinalDirs;
+        return pool[Math.floor(Math.random()*pool.length)];
+      }
+
+      let x=-10; // start offsets to roughly match old path
+      let y=-10;
+      let {vx,vy}=pickNewDirection();
+      let lastTime=performance.now();
+
+      function step(now){
+        const dt=now-lastTime;
+        lastTime=now;
+
+        let newX=x+vx*speed*dt;
+        let newY=y+vy*speed*dt;
+        let changedDirection=false;
+
+        if(newX<minOffset){
+          newX=minOffset;
+          changedDirection=true;
+        }else if(newX>maxOffset){
+          newX=maxOffset;
+          changedDirection=true;
+        }
+        if(newY<minOffset){
+          newY=minOffset;
+          changedDirection=true;
+        }else if(newY>maxOffset){
+          newY=maxOffset;
+          changedDirection=true;
+        }
+
+        x=newX;
+        y=newY;
+
+        if(changedDirection){
+          const dir=pickNewDirection();
+          vx=dir.vx;
+          vy=dir.vy;
+        }
+
+        backgroundElement.style.transform=`translate3d(calc(-50% + ${x}vw),calc(-50% + ${y}vh),0)`;
+        requestAnimationFrame(step);
+      }
+
+      requestAnimationFrame(step);
     };
     backgroundImage.onerror=()=>console.error("Background image failed to load");
 
