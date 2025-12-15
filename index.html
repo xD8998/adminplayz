@@ -293,7 +293,7 @@
       // JS-driven background pan with 50% chance to go diagonal on direction changes
       const minOffset=-10;
       const maxOffset=10;
-      const speed=0.004; // movement speed (vw/vh per ms)
+      const speed=0.002; // movement speed (vw/vh per ms) - slowed down
 
       const cardinalDirs=[
         {vx: 1, vy: 0},  // right
@@ -309,7 +309,7 @@
       ];
 
       function pickNewDirection(){
-        const useDiagonal=Math.random()<0.5; // 50% chance to go diagonal
+        const useDiagonal=Math.random()<0.2; // 20% chance to go diagonal
         const pool=useDiagonal?diagonalDirs:cardinalDirs;
         return pool[Math.floor(Math.random()*pool.length)];
       }
