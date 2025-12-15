@@ -290,34 +290,53 @@
       backgroundElement.style.backgroundImage=`url('${backgroundImage.src}')`;
       backgroundElement.classList.add("loaded");
 
-      // JS-driven background pan with 50% chance to go diagonal on direction changes
+      // JS-driven background pan with fixed direction order and 20% diagonal chance
       const minOffset=-10;
       const maxOffset=10;
       const speed=0.002; // movement speed (vw/vh per ms) - slowed down
 
+      // Direction order: left -> up -> right -> down (loop)
       const cardinalDirs=[
-        {vx: 1, vy: 0},  // right
-        {vx:-1, vy: 0},  // left
-        {vx: 0, vy: 1},  // down
-        {vx: 0, vy:-1}   // up
+        {vx:-1,vy:0},  // left
+        {vx:0,vy:-1},  // up
+        {vx:1,vy:0},   // right
+        {vx:0,vy:1}    // down
       ];
+
+      // Diagonals corresponding to the corner between current and next cardinal direction
+      // left -> up = top-left, up -> right = top-right, right -> down = bottom-right, down -> left = bottom-left
       const diagonalDirs=[
-        {vx: 1, vy: 1},   // down-right
-        {vx:-1, vy: 1},   // down-left
-        {vx: 1, vy:-1},   // up-right
-        {vx:-1, vy:-1}    // up-left
+        {vx:-1,vy:-1}, // top-left
+        {vx:1,vy:-1},  // top-right
+        {vx:1,vy:1},   // bottom-right
+        {vx:-1,vy:1}   // bottom-left
       ];
 
-      function pickNewDirection(){
-        const useDiagonal=Math.random()<0.2; // 20% chance to go diagonal
-        const pool=useDiagonal?diagonalDirs:cardinalDirs;
-        return pool[Math.floor(Math.random()*pool.length)];
-      }
+      const diagonalChance=0.2; // 20% chance
 
-      let x=-10; // start offsets to roughly match old path
+      let x=-10;
       let y=-10;
-      let {vx,vy}=pickNewDirection();
+      let directionIndex=0; // start with "left"
+      let vx=cardinalDirs[directionIndex].vx;
+      let vy=cardinalDirs[directionIndex].vy;
       let lastTime=performance.now();
+
+      function setNextDirection(hitXBoundary,hitYBoundary){
+        // Always advance in fixed order: left -> up -> right -> down
+        const prevIndex=directionIndex;
+        directionIndex=(directionIndex+1)%cardinalDirs.length;
+
+        // Base direction is the next cardinal
+        let nextDir={...cardinalDirs[directionIndex]};
+
+        // 20% chance to go diagonal toward the corner between previous and next directions
+        if(Math.random()<diagonalChance){
+          nextDir={...diagonalDirs[prevIndex]};
+        }
+
+        vx=nextDir.vx;
+        vy=nextDir.vy;
+      }
 
       function step(now){
         const dt=now-lastTime;
@@ -325,30 +344,31 @@
 
         let newX=x+vx*speed*dt;
         let newY=y+vy*speed*dt;
-        let changedDirection=false;
+
+        let hitXBoundary=false;
+        let hitYBoundary=false;
 
         if(newX<minOffset){
           newX=minOffset;
-          changedDirection=true;
+          hitXBoundary=true;
         }else if(newX>maxOffset){
           newX=maxOffset;
-          changedDirection=true;
+          hitXBoundary=true;
         }
+
         if(newY<minOffset){
           newY=minOffset;
-          changedDirection=true;
+          hitYBoundary=true;
         }else if(newY>maxOffset){
           newY=maxOffset;
-          changedDirection=true;
+          hitYBoundary=true;
         }
 
         x=newX;
         y=newY;
 
-        if(changedDirection){
-          const dir=pickNewDirection();
-          vx=dir.vx;
-          vy=dir.vy;
+        if(hitXBoundary || hitYBoundary){
+          setNextDirection(hitXBoundary,hitYBoundary);
         }
 
         backgroundElement.style.transform=`translate3d(calc(-50% + ${x}vw),calc(-50% + ${y}vh),0)`;
