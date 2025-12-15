@@ -23,8 +23,15 @@
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
     html,body{height:100%;font-family:system-ui,-apple-system,sans-serif;color:#1f2937}
-    .background{position:fixed;top:50%;left:50%;width:120vw;height:120vh;background-size:cover;background-repeat:no-repeat;background-position:center;z-index:-1;will-change:transform;opacity:0;transition:opacity 1s ease-in-out}
+    .background{position:fixed;top:50%;left:50%;width:120vw;height:120vh;background-size:cover;background-repeat:no-repeat;background-position:center;z-index:-1;will-change:transform;animation:panBackground 60s linear infinite;opacity:0;transition:opacity 1s ease-in-out}
     .background.loaded{opacity:1}
+    @keyframes panBackground{
+      0%{transform:translate3d(calc(-50% - 10vw),calc(-50% - 10vh),0)}
+      25%{transform:translate3d(calc(-50% + 10vw),calc(-50% - 10vh),0)}
+      50%{transform:translate3d(calc(-50% + 10vw),calc(-50% + 10vh),0)}
+      75%{transform:translate3d(calc(-50% - 10vw),calc(-50% + 10vh),0)}
+      100%{transform:translate3d(calc(-50% - 10vw),calc(-50% - 10vh),0)}
+    }
     .app{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:2rem;padding-top:8rem}
     .hero{text-align:center;margin:4rem 0 3rem;animation:fadeInDown .8s ease-out}
     .hero h1{font-size:2rem;font-weight:700;margin-bottom:1rem;background:linear-gradient(120deg,#000,#00000090,#000);background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:gradientFlow 3s linear infinite;text-shadow:0 4px 18px rgba(0,0,0,.35)}
@@ -289,86 +296,6 @@
     backgroundImage.onload=()=>{
       backgroundElement.style.backgroundImage=`url('${backgroundImage.src}')`;
       backgroundElement.classList.add("loaded");
-
-      // JS-driven background pan with fixed direction order and 20% diagonal chance
-      const minOffset=-10;
-      const maxOffset=10;
-      const speed=0.002; // movement speed (vw/vh per ms) - slowed down
-
-      // Direction order: left -> up -> right -> down (loop)
-      const cardinalDirs=[
-        {vx:-1,vy:0},  // left
-        {vx:0,vy:-1},  // up
-        {vx:1,vy:0},   // right
-        {vx:0,vy:1}    // down
-      ];
-
-      // Diagonals corresponding to the corner between current and next cardinal direction
-      // left -> up = top-left, up -> right = top-right, right -> down = bottom-right, down -> left = bottom-left
-      const diagonalDirs=[
-        {vx:-1,vy:-1}, // top-left
-        {vx:1,vy:-1},  // top-right
-        {vx:1,vy:1},   // bottom-right
-        {vx:-1,vy:1}   // bottom-left
-      ];
-
-      const diagonalChance=0.2; // 20% chance
-      const segmentDuration=4000; // ms per direction segment
-
-      let x=-10;
-      let y=-10;
-      let directionIndex=0; // start with "left"
-      let vx=cardinalDirs[directionIndex].vx;
-      let vy=cardinalDirs[directionIndex].vy;
-      let lastTime=performance.now();
-      let segmentTime=0;
-
-      function setNextDirection(){
-        const prevIndex=directionIndex;
-        // Always advance in fixed order: left -> up -> right -> down
-        directionIndex=(directionIndex+1)%cardinalDirs.length;
-
-        // Base direction is the next cardinal
-        let nextDir={...cardinalDirs[directionIndex]};
-
-        // 20% chance to go diagonal toward the corner between previous and next directions
-        if(Math.random()<diagonalChance){
-          nextDir={...diagonalDirs[prevIndex]};
-        }
-
-        vx=nextDir.vx;
-        vy=nextDir.vy;
-      }
-
-      function step(now){
-        const dt=now-lastTime;
-        lastTime=now;
-        segmentTime+=dt;
-
-        // Move according to current direction
-        let newX=x+vx*speed*dt;
-        let newY=y+vy*speed*dt;
-
-        // Clamp to bounds but do NOT reverse direction based on edges
-        if(newX<minOffset)newX=minOffset;
-        if(newX>maxOffset)newX=maxOffset;
-        if(newY<minOffset)newY=minOffset;
-        if(newY>maxOffset)newY=maxOffset;
-
-        x=newX;
-        y=newY;
-
-        // After each segment, move to the next direction in the fixed order
-        if(segmentTime>=segmentDuration){
-          segmentTime=0;
-          setNextDirection();
-        }
-
-        backgroundElement.style.transform=`translate3d(calc(-50% + ${x}vw),calc(-50% + ${y}vh),0)`;
-        requestAnimationFrame(step);
-      }
-
-      requestAnimationFrame(step);
     };
     backgroundImage.onerror=()=>console.error("Background image failed to load");
 
