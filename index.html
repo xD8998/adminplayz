@@ -313,6 +313,7 @@
       ];
 
       const diagonalChance=0.2; // 20% chance
+      const segmentDuration=4000; // ms per direction segment
 
       let x=-10;
       let y=-10;
@@ -320,10 +321,11 @@
       let vx=cardinalDirs[directionIndex].vx;
       let vy=cardinalDirs[directionIndex].vy;
       let lastTime=performance.now();
+      let segmentTime=0;
 
-      function setNextDirection(hitXBoundary,hitYBoundary){
-        // Always advance in fixed order: left -> up -> right -> down
+      function setNextDirection(){
         const prevIndex=directionIndex;
+        // Always advance in fixed order: left -> up -> right -> down
         directionIndex=(directionIndex+1)%cardinalDirs.length;
 
         // Base direction is the next cardinal
@@ -341,34 +343,25 @@
       function step(now){
         const dt=now-lastTime;
         lastTime=now;
+        segmentTime+=dt;
 
+        // Move according to current direction
         let newX=x+vx*speed*dt;
         let newY=y+vy*speed*dt;
 
-        let hitXBoundary=false;
-        let hitYBoundary=false;
-
-        if(newX<minOffset){
-          newX=minOffset;
-          hitXBoundary=true;
-        }else if(newX>maxOffset){
-          newX=maxOffset;
-          hitXBoundary=true;
-        }
-
-        if(newY<minOffset){
-          newY=minOffset;
-          hitYBoundary=true;
-        }else if(newY>maxOffset){
-          newY=maxOffset;
-          hitYBoundary=true;
-        }
+        // Clamp to bounds but do NOT reverse direction based on edges
+        if(newX<minOffset)newX=minOffset;
+        if(newX>maxOffset)newX=maxOffset;
+        if(newY<minOffset)newY=minOffset;
+        if(newY>maxOffset)newY=maxOffset;
 
         x=newX;
         y=newY;
 
-        if(hitXBoundary || hitYBoundary){
-          setNextDirection(hitXBoundary,hitYBoundary);
+        // After each segment, move to the next direction in the fixed order
+        if(segmentTime>=segmentDuration){
+          segmentTime=0;
+          setNextDirection();
         }
 
         backgroundElement.style.transform=`translate3d(calc(-50% + ${x}vw),calc(-50% + ${y}vh),0)`;
