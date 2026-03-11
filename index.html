@@ -20,16 +20,17 @@
 
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
-    html,body{height:100%;font-family:system-ui,-apple-system,sans-serif;color:#1f2937}
-    .background{position:fixed;top:50%;left:50%;width:120vw;height:120vh;background-size:cover;background-repeat:no-repeat;background-position:center;z-index:-1;will-change:transform;animation:panBackground 60s linear infinite;opacity:0;transition:opacity 1s ease-in-out}
-    .background.loaded{opacity:1}
-    @keyframes panBackground{
-      0%{transform:translate3d(calc(-50% - 10vw),calc(-50% - 10vh),0)}
-      25%{transform:translate3d(calc(-50% + 10vw),calc(-50% - 10vh),0)}
-      50%{transform:translate3d(calc(-50% + 10vw),calc(-50% + 10vh),0)}
-      75%{transform:translate3d(calc(-50% - 10vw),calc(-50% + 10vh),0)}
-      100%{transform:translate3d(calc(-50% - 10vw),calc(-50% - 10vh),0)}
+    
+    /* ADDED: Base background gradient mapped to body/html */
+    html,body{height:100%;font-family:system-ui,-apple-system,sans-serif;color:#1f2937;background:linear-gradient(135deg,#e6ffff 0%,#33ccff 100%);background-attachment:fixed;}
+    
+    /* REPLACED: New optimized scrolling grid background */
+    .background{position:fixed;top:-50vh;left:-50vw;width:200vw;height:200vh;transform:rotate(-12deg);background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60"><rect width="30" height="30" fill="rgba(255, 255, 255, 0.25)"/><rect x="30" y="30" width="30" height="30" fill="rgba(255, 255, 255, 0.25)"/></svg>');z-index:-1;will-change:background-position;animation:scrollGrid 3s linear infinite}
+    @keyframes scrollGrid{
+      0%{background-position:0 0}
+      100%{background-position:60px 60px}
     }
+    
     .app{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:2rem;padding-top:8rem}
     .hero{text-align:center;margin:4rem 0 3rem;animation:fadeInDown .8s ease-out}
     .hero h1{font-size:2rem;font-weight:700;margin-bottom:1rem;background:linear-gradient(120deg,#000,#00000090,#000);background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:gradientFlow 3s linear infinite;text-shadow:0 4px 18px rgba(0,0,0,.35)}
@@ -124,7 +125,7 @@
       .link-card{padding:1.25rem}
       .corner-image{width:6rem;height:6rem}
       footer{margin-top:2rem;font-size:.75rem}
-      .background{width:140vw;height:140vh}
+      /* Removed the .background override here since the new grid handles sizing naturally */
       .latest-video-section{margin-top:2rem}
       .latest-video-section h2{font-size:1.5rem}
       .video-title{font-size:1rem}
@@ -261,7 +262,6 @@
     const modalLinks=document.getElementById("modalLinks");
     const closeModalBtn=document.getElementById("closeModal");
     const cornerImage=document.getElementById("cornerImage");
-    const backgroundElement=document.querySelector(".background");
 
     window.addEventListener("load",()=>cornerImage.classList.add("loaded"));
 
@@ -296,14 +296,6 @@
       modalBackdrop.classList.add("active");
       modalContent.classList.add("active");
     }
-
-    const backgroundImage=new Image();
-    backgroundImage.src="./background.jpg";
-    backgroundImage.onload=()=>{
-      backgroundElement.style.backgroundImage=`url('${backgroundImage.src}')`;
-      backgroundElement.classList.add("loaded");
-    };
-    backgroundImage.onerror=()=>console.error("Background image failed to load");
 
     SOCIAL_LINKS.forEach(item=>{
       const linkCard=document.createElement("div");
