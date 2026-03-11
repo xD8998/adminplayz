@@ -28,10 +28,10 @@
       top:-50vh;
       left:-50vw;
       transform:rotate(-12deg);
-      background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60"><rect width="30" height="30" fill="rgba(255,255,255,0.25)"/><rect x="30" y="30" width="30" height="30" fill="rgba(255,255,255,0.25)"/></svg>');
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Crect width='30' height='30' fill='rgba(255%2C255%2C255%2C0.25)'/%3E%3Crect x='30' y='30' width='30' height='30' fill='rgba(255%2C255%2C255%2C0.25)'/%3E%3C/svg%3E");
       will-change:background-position;
       animation:scrollGrid 3s linear infinite;
-      z-index:-1;
+      z-index:0;
       pointer-events:none;
     }
     @keyframes scrollGrid{
@@ -40,7 +40,7 @@
     }
     /* ======================================= */
 
-    .app{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:2rem;padding-top:8rem}
+    .app{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:2rem;padding-top:8rem}
     .hero{text-align:center;margin:4rem 0 3rem;animation:fadeInDown .8s ease-out}
     .hero h1{font-size:2rem;font-weight:700;margin-bottom:1rem;background:linear-gradient(120deg,#000,#00000090,#000);background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:gradientFlow 3s linear infinite;text-shadow:0 4px 18px rgba(0,0,0,.35)}
     .hero p{font-size:1rem;color:#4b5563;transform:translateY(0);transition:transform .3s ease;text-shadow:0 2px 10px rgba(0,0,0,.25)}
