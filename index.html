@@ -1,431 +1,699 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
+
   <meta charset="UTF-8" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
   <title>AdminPlayz Social Links</title>
+
   <link rel="icon" type="image/x-icon" href="./test.ico">
+
   <meta name="description" content="Connect with Admin Playz across all social platforms.">
+
   <meta property="og:type" content="website">
+
   <meta property="og:title" content="AdminPlayz Social Links">
+
   <meta property="og:description" content="Connect with Admin Playz across Roblox, YouTube, Discord, TikTok, Snapchat, and more.">
+
   <meta property="og:image" content="./Remove%20background%20project.png">
+
   <meta property="og:url" content="https://adminplayz.com">
+
   <meta name="twitter:card" content="summary_large_image">
+
   <meta name="twitter:title" content="AdminPlayz Social Links">
+
   <meta name="twitter:description" content="Connect with Admin Playz across Roblox, YouTube, Discord, TikTok, Snapchat, and more.">
+
   <meta name="twitter:image" content="./Remove%20background%20project.png">
 
+
   <style>
+
     *{box-sizing:border-box;margin:0;padding:0}
-    
-    /* FIX: Changed height:100% to min-height:100vh so scrolling registers properly */
-    html,body{min-height:100vh;font-family:system-ui,-apple-system,sans-serif;color:#1f2937;overflow-x:hidden;background:linear-gradient(135deg,#b3f0ff 0%,#33ccff 100%)}
+
+    html,body{height:100%;font-family:system-ui,-apple-system,sans-serif;color:#1f2937;overflow-x:hidden;background:linear-gradient(135deg,#b3f0ff 0%,#33ccff 100%)}
+
 
     /* === SCROLLING CYAN GRID BACKGROUND === */
+
     .scrolling-grid{
+
       position:fixed;
+
       width:200vw;
+
       height:200vh;
+
       top:-50vh;
+
       left:-50vw;
+
       transform:rotate(-12deg);
+
       background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Crect width='60' height='60' fill='rgba(255%2C255%2C255%2C0.12)'/%3E%3Crect x='60' y='60' width='60' height='60' fill='rgba(255%2C255%2C255%2C0.12)'/%3E%3C/svg%3E");
+
       will-change:background-position;
+
       animation:scrollGrid 4s linear infinite;
+
       z-index:0;
+
       pointer-events:none;
+
     }
+
     @keyframes scrollGrid{
+
       0%{background-position:0 0}
+
       100%{background-position:120px 120px}
+
     }
+
     /* ======================================= */
 
-    /* --- SMART NAVBAR STYLES --- */
-    .navbar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 60px;
-      display: flex;
-      align-items: center;
-      padding: 0 1.5rem;
-      background: rgba(255, 255, 255, 0.1); 
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      z-index: 1000;
-      transition: transform 0.3s ease-in-out, background 0.3s ease;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    }
-    .navbar.nav-hidden {
-      transform: translateY(-100%);
-    }
-    .favicon-link {
-      width: 35px;
-      height: 35px;
-      cursor: pointer;
-      transition: transform 0.3s ease;
-      display: flex;
-      align-items: center;
-      filter: drop-shadow(0 4px 10px rgba(0,0,0,.4));
-    }
-    .favicon-link:hover {
-      transform: scale(1.1);
-    }
-    .favicon-link img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-    }
-    /* ======================================= */
 
     .app{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:2rem;padding-top:8rem}
+
     .hero{text-align:center;margin:4rem 0 3rem;animation:fadeInDown .8s ease-out}
+
     .hero h1{font-size:2rem;font-weight:700;margin-bottom:1rem;background:linear-gradient(120deg,#000,#00000090,#000);background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:gradientFlow 3s linear infinite;text-shadow:0 4px 18px rgba(0,0,0,.35)}
+
     .hero p{font-size:1rem;color:#4b5563;transform:translateY(0);transition:transform .3s ease;text-shadow:0 2px 10px rgba(0,0,0,.25)}
+
     .hero:hover p{transform:translateY(-3px)}
+
     .social-grid{display:grid;grid-template-columns:1fr;gap:1rem;max-width:800px;width:100%;animation:fadeInUp .8s ease-out}
+
     .link-card{padding:1.5rem;border-radius:1rem;color:#fff;display:flex;align-items:flex-start;gap:1rem;cursor:pointer;border:1px solid rgba(255,255,255,.1);box-shadow:0 10px 25px rgba(0,0,0,.35);transition:all .4s cubic-bezier(.4,0,.2,1);text-decoration:none;position:relative;overflow:hidden;background-size:200% 200%!important;background-position:center!important}
+
     .link-card::before{content:"";position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.1),transparent);transition:.5s}
+
     .link-card:hover::before{left:100%}
+
     .link-card:hover{box-shadow:0 16px 35px rgba(0,0,0,.4);transform:scale(1.03) translateY(-5px)}
+
     .icon-wrapper{background-color:rgba(255,255,255,.1);padding:.5rem;border-radius:9999px;display:flex;align-items:center;justify-content:center;transition:all .5s cubic-bezier(.4,0,.2,1);margin-top:.25rem;box-shadow:0 4px 12px rgba(0,0,0,.35)}
+
     .link-card:hover .icon-wrapper{background-color:rgba(255,255,255,.2)}
+
     .icon{width:2rem;height:2rem;transition:transform .5s cubic-bezier(.4,0,.2,1)}
+
     .link-card:hover .icon{transform:rotate(360deg) scale(1.1)}
+
     .label-container{display:flex;flex-direction:column;flex-grow:1}
+
     .link-label{font-size:1.25rem;font-weight:600;transition:transform .3s ease;text-shadow:0 2px 10px rgba(0,0,0,.3)}
+
     .link-description{font-size:.875rem;opacity:.8;margin-top:.25rem;font-weight:400;transition:opacity .3s ease;text-shadow:0 1px 6px rgba(0,0,0,.25)}
+
     .link-card:hover .link-description{opacity:1}
+
     .link-card:hover .link-label{transform:translateX(5px)}
+
     footer{margin-top:3rem;font-size:.875rem;color:#6b7280;animation:fadeIn 1s ease-out;text-shadow:0 1px 4px rgba(0,0,0,.25)}
 
+
     /* MODAL */
+
     .modal-backdrop{position:fixed;inset:0;background-color:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;z-index:50;opacity:0;pointer-events:none;transition:opacity .3s ease-in-out;backdrop-filter:blur(8px)}
+
     .modal-backdrop.active{opacity:1;pointer-events:all}
+
     .modal{background:rgba(20,20,25,0.85);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.1);border-radius:1.25rem;padding:2rem;max-width:400px;width:90%;transform:scale(.95) translateY(20px);transition:all .4s cubic-bezier(.4,0,.2,1);box-shadow:0 25px 60px -12px rgba(0,0,0,.8);position:relative;color:#fff}
+
     .modal::before{content:"";position:absolute;inset:-1px;background:linear-gradient(45deg,rgba(255,255,255,0.1),transparent,rgba(255,255,255,0.05));border-radius:inherit;z-index:-1}
+
     .modal.active{transform:scale(1) translateY(0)}
+
     .modal h2{font-size:1.5rem;font-weight:700;margin-bottom:1.5rem;color:#fff;position:relative;padding-bottom:.5rem;text-shadow:0 2px 12px rgba(0,0,0,.5)}
+
     .modal h2::after{content:"";position:absolute;bottom:0;left:0;width:50px;height:3px;background:linear-gradient(90deg,#fff,transparent)}
+
     .modal .link-list{display:grid;gap:.75rem}
+
     .modal a{text-decoration:none;color:#fff;background:rgba(255,255,255,0.05);border-radius:.75rem;padding:1rem;transition:all .3s ease-in-out;position:relative;overflow:hidden;border:1px solid rgba(255,255,255,0.1);box-shadow:0 6px 18px rgba(0,0,0,.25);z-index:1}
+
     .modal a:hover{transform:translateX(5px);background:rgba(255,255,255,0.1);box-shadow:0 10px 24px rgba(0,0,0,.4)}
+
     .close-btn{margin-top:1.5rem;padding:.75rem 1.5rem;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.1);color:#fff;border-radius:.5rem;cursor:pointer;transition:all .3s ease;font-weight:500;width:100%;box-shadow:0 6px 18px rgba(0,0,0,.3)}
+
     .close-btn:hover{background:rgba(255,255,255,0.2);transform:translateY(-2px);box-shadow:0 10px 24px rgba(0,0,0,.4)}
+
     .modal.youtube-modal a{background:linear-gradient(145deg,rgba(255,0,0,0.15),rgba(255,0,0,0.05));border:1px solid rgba(255,0,0,0.3);color:#ffcccc;}
+
     .modal.youtube-modal a::before{content:"";position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(45deg,#ff0000,#cc0000);z-index:-1;opacity:0;transition:opacity .3s ease}
+
     .modal.youtube-modal a:hover{color:#fff;transform:translateX(5px);box-shadow:0 8px 20px rgba(255,0,0,0.3)}
+
     .modal.youtube-modal a:hover::before{opacity:1}
+
     .modal.youtube-modal h2::after{background:linear-gradient(90deg,#ff0000,transparent)}
+
     .modal.roblox-modal a{background:linear-gradient(145deg,rgba(123,47,249,0.15),rgba(123,47,249,0.05));border:1px solid rgba(123,47,249,0.3);color:#e2cfff;}
+
     .modal.roblox-modal a::before{content:"";position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(45deg,#7b2ff9,#6620cc);z-index:-1;opacity:0;transition:opacity .3s ease}
+
     .modal.roblox-modal a:hover{color:#fff;transform:translateX(5px);box-shadow:0 8px 20px rgba(123,47,249,0.3)}
+
     .modal.roblox-modal a:hover::before{opacity:1}
+
     .modal.roblox-modal h2::after{background:linear-gradient(90deg,#7b2ff9,transparent)}
 
+
     .corner-image{position:fixed;bottom:0;left:1rem;width:8rem;height:8rem;pointer-events:none;user-select:none;opacity:0;transform:translate(-20px,20px);transition:all .5s cubic-bezier(.4,0,.2,1);filter:drop-shadow(0 10px 30px rgba(0,0,0,.5));z-index:10}
+
     .corner-image.loaded{opacity:1;transform:translate(0,0)}
+
     .bg-twitter{background:linear-gradient(135deg,#000000ee 0,#1DA1F2ee 100%);background-size:200% 200%}
+
     .bg-discord{background:linear-gradient(135deg,#5865F2ee 0,#4752c4ee 100%);background-size:200% 200%}
+
     .bg-youtube{background:linear-gradient(135deg,#FF0000ee 0,#cc0000ee 100%);background-size:200% 200%}
+
     .bg-roblox{background:linear-gradient(135deg,#000000ee 0,#7b2ff9ee 100%);background-size:200% 200%}
+
     .bg-tiktok{background:linear-gradient(135deg,#000000ee 0,#25F4EEee 50%,#FE2C55ee 100%);background-size:200% 200%}
+
     .bg-snapchat{background:linear-gradient(135deg,#FFFC00ee 0,#FEEF00ee 100%);background-size:200% 200%}
+
     .icon-inner{width:2rem;height:2rem;position:relative;display:flex;align-items:center;justify-content:center}
+
     .icon img{width:100%;height:100%;object-fit:contain;opacity:0;transform:scale(.8);transition:opacity .5s ease,transform .5s ease}
+
     .icon img.loaded{opacity:1;transform:scale(1)}
 
+
     @keyframes fadeInDown{from{opacity:0;transform:translateY(-20px)}to{opacity:1;transform:translateY(0)}}
+
     @keyframes fadeInUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
     @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+
     @keyframes gradientFlow{0%{background-position:0 50%}100%{background-position:200% 50%}}
 
+
     @media(min-width:768px){
+
       .hero h1{font-size:3rem}
+
       .hero p{font-size:1.25rem}
+
       .social-grid{grid-template-columns:1fr 1fr}
+
     }
+
+    .favicon-link{position:absolute;top:1rem;left:1rem;width:32px;height:32px;cursor:pointer;transition:transform .3s ease;z-index:10;filter:drop-shadow(0 4px 10px rgba(0,0,0,.4))}
+
+    .favicon-link:hover{transform:scale(1.1)}
+
+    .favicon-link img{width:100%;height:100%;object-fit:contain}
+
     @media(max-width:767px){
+
       .app{padding:1rem;padding-top:6rem}
+
       .hero{margin-top:3rem}
+
       .hero h1{font-size:1.75rem}
+
       .hero p{font-size:.9rem}
+
       .social-grid{grid-template-columns:1fr;gap:.75rem}
+
       .link-card{padding:1.25rem}
+
       .corner-image{width:6rem;height:6rem}
+
       footer{margin-top:2rem;font-size:.75rem}
+
       .latest-video-section{margin-top:2rem}
+
       .latest-video-section h2{font-size:1.5rem}
+
       .video-title{font-size:1rem}
+
     }
+
     @media(max-height:500px) and (orientation:landscape){
+
       .app{padding:.5rem 1rem;justify-content:flex-start;padding-top:5rem}
+
       .hero{margin:2rem 0 1.5rem}
+
       .hero h1{font-size:1.5rem;margin-bottom:.5rem}
+
       .social-grid{grid-template-columns:repeat(2,1fr);gap:.5rem}
+
       .link-card{padding:.75rem}
+
       .icon-wrapper{padding:.25rem}
+
       .icon{width:1.5rem;height:1.5rem}
+
       .link-label{font-size:1rem}
+
       .link-description{font-size:.75rem}
+
       .corner-image{width:4rem;height:4rem}
+
       footer{margin-top:1rem}
+
       .modal{max-height:80vh;overflow-y:auto}
+
     }
+
     @media(max-width:500px){
+
       .modal{width:95%;padding:1.5rem}
+
       .modal h2{font-size:1.25rem;margin-bottom:1rem}
+
       .modal a{padding:.75rem}
+
       .close-btn{padding:.5rem 1rem;margin-top:1rem}
-      .favicon-link{width:28px;height:28px}
+
+      .favicon-link{top:.5rem;left:.5rem;width:28px;height:28px}
+
     }
+
     .latest-video-section{margin:3rem 0 2rem;width:100%;max-width:800px;animation:fadeIn 1s ease-out;padding-top:2rem}
+
     .latest-video-section h2{text-align:center;font-size:1.8rem;font-weight:700;margin-bottom:1.5rem;background:linear-gradient(120deg,#000,#333);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 4px 20px rgba(0,0,0,.45);position:relative;padding-bottom:.5rem}
+
     .latest-video-section h2::after{content:"";position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:100px;height:3px;background:linear-gradient(90deg,transparent,#000,transparent)}
+
     .video-title{margin-top:1rem;text-align:center;font-size:1.2rem;color:#1f2937;font-weight:600;cursor:pointer;transition:all .3s ease;text-decoration:none;display:block;padding:.5rem;border-radius:.5rem;text-shadow:0 4px 20px rgba(0,0,0,.45);box-shadow:0 8px 22px rgba(0,0,0,.35);background:none}
+
     .video-title:hover{transform:translateY(-2px);text-shadow:0 6px 28px rgba(0,0,0,.5);box-shadow:0 12px 28px rgba(0,0,0,.45)}
+
     .video-container{position:relative;width:100%;padding-bottom:56.25%;background:rgba(0,0,0,.18);border-radius:1rem;overflow:hidden;box-shadow:0 16px 40px -5px rgba(0,0,0,.55),0 8px 24px -4px rgba(0,0,0,.45);transition:transform .3s ease,box-shadow .3s ease;opacity:0;animation:fadeIn .8s ease-out forwards}
+
     .video-container:hover{transform:translateY(-2px);box-shadow:0 22px 55px -5px rgba(0,0,0,.65),0 12px 32px -4px rgba(0,0,0,.55)}
+
     .video-container iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none;border-radius:1rem;opacity:0;transition:opacity .6s ease-in-out;box-shadow:0 0 30px rgba(0,0,0,.4) inset}
+
     .video-container iframe.loaded{opacity:1}
+
   </style>
+
 </head>
+
 <body>
+
+
+  <!-- Scrolling cyan grid background -->
 
   <div class="scrolling-grid"></div>
 
-  <nav class="navbar" id="navbar">
-    <a href="https://adminplayz.com" class="favicon-link">
-      <img src="./test.ico" alt="AdminPlayz Logo">
-    </a>
-  </nav>
 
   <div class="app">
+
+    <a href="https://adminplayz.com" class="favicon-link">
+
+      <img src="./test.ico" alt="AdminPlayz Logo">
+
+    </a>
+
+
     <div class="hero">
+
       <h1>Welcome to the Admin Playz Website</h1>
+
       <p>Connect to Admin Playz</p>
+
     </div>
+
 
     <div class="social-grid" id="socialGrid"></div>
 
+
     <div class="latest-video-section">
+
       <h2>Latest Video</h2>
+
       <div class="video-container" id="latestVideo"></div>
+
       <div class="video-title" id="videoTitle"></div>
+
     </div>
+
 
     <img
+
       id="cornerImage"
+
       src="./Remove%20background%20project.png"
+
       alt="Admin Playz Logo"
+
       class="corner-image"
+
     />
 
+
     <footer>
+
       <p>&copy; 2025 Admin Playz. All rights reserved.</p>
+
     </footer>
+
   </div>
+
 
   <div class="modal-backdrop" id="modalBackdrop">
+
     <div class="modal" id="modalContent">
+
       <h2 id="modalTitle"></h2>
+
       <div class="link-list" id="modalLinks"></div>
+
       <button class="close-btn" id="closeModal">Close</button>
+
     </div>
+
   </div>
 
+
   <script>
+
     const SOCIAL_LINKS=[
+
       {
+
         name:"Roblox",
+
         icon:'<img class="icon" src="https://devforum-uploads.s3.dualstack.us-east-2.amazonaws.com/uploads/original/4X/0/e/e/0eeeb19633422b1241f4306419a0f15f39d58de9.png" alt="Roblox logo">',
+
         description:"Click to view links",
+
         type:"multiple",
+
         links:[
+
           {name:"Profile",url:"https://www.roblox.com/users/1433939513/profile",description:"@Administratorgear"},
+
           {name:"Fan Club",url:"https://www.roblox.com/communities/10352325/The-Admin-Playz-Fan-Club#!/about",description:"The Admin Playz Fan Club"},
+
           {name:"Development Group",url:"https://www.roblox.com/communities/7162718/The-Admin-Studio#!/about",description:"The Admin Studio (Dev group where we used to make games)"}
+
         ]
+
       },
+
       {
+
         name:"YouTube",
+
         icon:'<img class="icon" src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube logo">',
+
         description:"Click to view links",
+
         type:"multiple",
+
         links:[
+
           {name:"Main Channel",url:"https://www.youtube.com/@adminplayz",description:"@adminplayz"},
+
           {name:"Shorts Channel",url:"https://www.youtube.com/@AdminPlayzShorts",description:"@AdminPlayzShorts"}
+
         ]
+
       },
+
       {
+
         name:"Twitter",
+
         url:"https://x.com/AdmisPlayz",
+
         icon:'<img class="icon" src="https://www.iconpacks.net/icons/2/free-twitter-logo-icon-2429-thumb.png" alt="Twitter logo">',
+
         description:"@AdmisPlayz",
+
         type:"single"
+
       },
+
       {
+
         name:"Discord",
+
         url:"https://discord.gg/kJrKzj7rgd",
+
         icon:'<img class="icon" src="https://cdn-icons-png.flaticon.com/512/5968/5968756.png" alt="Discord logo">',
+
         description:"The Admin Playz Lounge!",
+
         type:"single"
+
       },
+
       {
+
         name:"TikTok",
+
         url:"https://www.tiktok.com/@adminplayzz",
+
         icon:'<img class="icon" src="https://cdn.pixabay.com/photo/2021/06/15/12/28/tiktok-6338432_960_720.png" alt="TikTok logo">',
+
         description:"@adminplayzz",
+
         type:"single"
+
       },
+
       {
+
         name:"Snapchat",
+
         url:"https://www.snapchat.com/@admisplayz",
+
         icon:'<img class="icon" src="https://cdn.worldvectorlogo.com/logos/snapchat-logo-3.svg" alt="Snapchat logo">',
+
         description:"@admisplayz",
+
         type:"single"
+
       }
+
     ];
 
+
     const socialGrid=document.getElementById("socialGrid");
+
     const modalBackdrop=document.getElementById("modalBackdrop");
+
     const modalContent=document.getElementById("modalContent");
+
     const modalTitle=document.getElementById("modalTitle");
+
     const modalLinks=document.getElementById("modalLinks");
+
     const closeModalBtn=document.getElementById("closeModal");
+
     const cornerImage=document.getElementById("cornerImage");
+
 
     window.addEventListener("load",()=>cornerImage.classList.add("loaded"));
 
+
     function closeModal(){
+
       modalBackdrop.classList.remove("active");
+
       modalContent.classList.remove("active");
+
     }
+
     closeModalBtn.addEventListener("click",closeModal);
+
     modalBackdrop.addEventListener("click",e=>{if(e.target===modalBackdrop)closeModal()});
 
+
     function openModal(title,links,platform){
+
       modalTitle.textContent=title;
+
       modalLinks.innerHTML="";
+
       modalContent.classList.remove("youtube-modal","roblox-modal");
+
       if(platform)modalContent.classList.add(`${platform}-modal`);
+
       links.forEach((link,index)=>{
+
         const a=document.createElement("a");
+
         a.href=link.url;
+
         a.target="_blank";
+
         a.rel="noopener noreferrer";
+
         a.textContent=link.name+(link.description?` - ${link.description}`:"");
+
         a.style.opacity="0";
+
         a.style.transform="translateX(-20px)";
+
         a.style.transition="all 0.3s ease";
+
         a.style.transitionDelay=`${index*0.1}s`;
+
         modalLinks.appendChild(a);
+
         setTimeout(()=>{
+
           a.style.opacity="1";
+
           a.style.transform="translateX(0)";
+
         },50);
+
       });
+
       modalBackdrop.classList.add("active");
+
       modalContent.classList.add("active");
+
     }
+
 
     SOCIAL_LINKS.forEach(item=>{
+
       const linkCard=document.createElement("div");
+
       linkCard.className="link-card";
+
       linkCard.classList.add(`bg-${item.name.toLowerCase()}`);
+
       const iconWrapper=document.createElement("div");
+
       iconWrapper.className="icon-wrapper";
+
       iconWrapper.innerHTML=item.icon;
+
       const iconImg=iconWrapper.querySelector("img");
+
       if(iconImg){iconImg.onload=function(){this.classList.add("loaded")};}
+
       linkCard.appendChild(iconWrapper);
+
       const labelContainer=document.createElement("div");
+
       labelContainer.className="label-container";
+
       const linkLabel=document.createElement("span");
+
       linkLabel.className="link-label";
+
       linkLabel.textContent=item.name;
+
       labelContainer.appendChild(linkLabel);
+
       if(item.description){
+
         const description=document.createElement("span");
+
         description.className="link-description";
+
         description.textContent=item.description;
+
         labelContainer.appendChild(description);
+
       }
+
       linkCard.appendChild(labelContainer);
+
       if(item.type==="single"){
+
         linkCard.addEventListener("click",()=>window.open(item.url,"_blank"));
+
       }else{
+
         linkCard.addEventListener("click",()=>{
+
           const platform=item.name.toLowerCase();
+
           openModal(`${item.name} Links`,item.links,platform);
+
         });
+
       }
+
       socialGrid.appendChild(linkCard);
+
     });
 
+
     async function fetchLatestVideo(){
+
       const videoContainer=document.getElementById("latestVideo");
+
       const videoTitleElement=document.getElementById("videoTitle");
+
       try{
+
         const response=await fetch("https://raw.githubusercontent.com/xD8998/adminplayz/refs/heads/main/devtest/link?"+new Date().getTime());
+
         if(!response.ok)throw new Error("Failed to fetch video data");
+
         const text=await response.text();
+
         const [videoUrlRaw,videoTitleRaw]=text.split("\n");
+
         const videoUrl=(videoUrlRaw||"").trim();
+
         const videoTitle=(videoTitleRaw||"").trim();
+
         const videoId=videoUrl.split("v=")[1]?.split("&")[0];
+
         if(videoId){
+
           videoContainer.innerHTML=`<iframe src="https://www.youtube.com/embed/${videoId}" title="Latest Video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen onload="this.classList.add('loaded')"></iframe>`;
+
           if(videoTitle){
+
             videoTitleElement.innerHTML=`<a href="${videoUrl}" target="_blank" class="video-title">${videoTitle}</a>`;
+
           }else{
+
             videoTitleElement.textContent="";
+
           }
+
         }else{
+
           videoContainer.innerHTML='<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;">No valid video found</div>';
+
           videoTitleElement.textContent="";
+
         }
+
       }catch(error){
+
         console.error("Error fetching latest video:",error);
+
         videoContainer.innerHTML='<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;">Failed to load latest video</div>';
+
         videoTitleElement.textContent="";
+
       }
+
     }
+
     fetchLatestVideo();
 
-    // --- SMART NAVBAR SCROLL LOGIC ---
-    let lastScrollY = window.scrollY || document.documentElement.scrollTop;
-    const navbar = document.getElementById('navbar');
-
-    window.addEventListener('scroll', () => {
-      const currentScrollY = window.scrollY || document.documentElement.scrollTop;
-
-      // Reset if at the absolute top (prevents mobile bounce glitches)
-      if (currentScrollY <= 0) {
-        navbar.classList.remove('nav-hidden');
-        navbar.style.background = "rgba(255, 255, 255, 0.1)";
-        return;
-      }
-
-      // Hide when scrolling down, show when scrolling up
-      if (currentScrollY > lastScrollY && currentScrollY > 40) {
-        navbar.classList.add('nav-hidden');
-      } else if (currentScrollY < lastScrollY) {
-        navbar.classList.remove('nav-hidden');
-      }
-      
-      // Update background opacity based on scroll position
-      if (currentScrollY > 20) {
-        navbar.style.background = "rgba(179, 240, 255, 0.9)";
-      } else {
-        navbar.style.background = "rgba(255, 255, 255, 0.1)";
-      }
-
-      lastScrollY = currentScrollY;
-    }, { passive: true }); // Makes the scrolling animation smoother
   </script>
+
 </body>
-</html>
+
+</html> 
