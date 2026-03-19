@@ -18,7 +18,9 @@
 
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
-    html,body{height:100%;font-family:system-ui,-apple-system,sans-serif;color:#1f2937;overflow-x:hidden;background:linear-gradient(135deg,#b3f0ff 0%,#33ccff 100%)}
+    
+    /* FIX: Changed height:100% to min-height:100vh so scrolling registers properly */
+    html,body{min-height:100vh;font-family:system-ui,-apple-system,sans-serif;color:#1f2937;overflow-x:hidden;background:linear-gradient(135deg,#b3f0ff 0%,#33ccff 100%)}
 
     /* === SCROLLING CYAN GRID BACKGROUND === */
     .scrolling-grid{
@@ -395,29 +397,35 @@
     fetchLatestVideo();
 
     // --- SMART NAVBAR SCROLL LOGIC ---
-    let lastScrollY = window.scrollY;
+    let lastScrollY = window.scrollY || document.documentElement.scrollTop;
     const navbar = document.getElementById('navbar');
 
     window.addEventListener('scroll', () => {
-      const currentScrollY = window.scrollY;
+      const currentScrollY = window.scrollY || document.documentElement.scrollTop;
 
-      if (currentScrollY > lastScrollY && currentScrollY > 100) {
-        // Scrolling Down - Hide Navbar
+      // Reset if at the absolute top (prevents mobile bounce glitches)
+      if (currentScrollY <= 0) {
+        navbar.classList.remove('nav-hidden');
+        navbar.style.background = "rgba(255, 255, 255, 0.1)";
+        return;
+      }
+
+      // Hide when scrolling down, show when scrolling up
+      if (currentScrollY > lastScrollY && currentScrollY > 40) {
         navbar.classList.add('nav-hidden');
-      } else {
-        // Scrolling Up - Show Navbar
+      } else if (currentScrollY < lastScrollY) {
         navbar.classList.remove('nav-hidden');
       }
       
-      // Optional: Make background more solid when scrolled
-      if (currentScrollY > 50) {
-        navbar.style.background = "rgba(179, 240, 255, 0.8)";
+      // Update background opacity based on scroll position
+      if (currentScrollY > 20) {
+        navbar.style.background = "rgba(179, 240, 255, 0.9)";
       } else {
         navbar.style.background = "rgba(255, 255, 255, 0.1)";
       }
 
       lastScrollY = currentScrollY;
-    });
+    }, { passive: true }); // Makes the scrolling animation smoother
   </script>
 </body>
 </html>
